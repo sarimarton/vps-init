@@ -14,7 +14,7 @@ echo Setting up users...
 [ -z "$ROOTPW" ] && passwd root || echo -e "$ROOTPW\n$ROOTPW" | passwd root
 adduser marci
 # Set password with checking if there's a preset value
-[ -z "$MARCIPW" ] && passwd root || echo -e "$MARCIPW\n$MARCIPW" | passwd marci
+[ -z "$MARCIPW" ] && passwd marci || echo -e "$MARCIPW\n$MARCIPW" | passwd marci
 usermod -aG wheel marci
 
 # Install utilities
