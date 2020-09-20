@@ -9,7 +9,7 @@
 
 # Setup up users
 echo Setting up users...
-
+echo $ROOTPW
 # Set password with checking if there's a preset value
 [ -z "$ROOTPW" ] && passwd root || echo -e "$ROOTPW\n$ROOTPW" | passwd root
 adduser marci
