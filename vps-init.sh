@@ -13,7 +13,7 @@ adduser marci
 [ -z "$MARCIPW" ] && passwd marci || echo -e "$MARCIPW\n$MARCIPW" | passwd marci
 usermod -aG wheel marci
 
-# Install stuff
+# Install packages
 curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
 
 # dnf install -y gcc-c++ make
@@ -36,7 +36,9 @@ runuser -l  marci -c 'cd projects && git clone https://github.com/sarimarton/vac
 
 # Add https
 
-# Final touch
+# Add sm-lang service and vacskamati updater to server-start
+
+# Finishing touches
 systemctl enable nginx
 systemctl start nginx
 
