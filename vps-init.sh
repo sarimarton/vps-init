@@ -15,6 +15,7 @@ usermod -aG wheel marci
 
 # Install stuff
 curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
+
 # dnf install -y gcc-c++ make
 dnf install -y mc nginx git nodejs
 
@@ -23,6 +24,19 @@ runuser -l  marci -c 'mkdir ~/projects'
 runuser -l  marci -c 'mkdir ~/static'
 runuser -l  marci -c 'mkdir ~/tmp'
 
+# Add nginx config
+curl https://raw.githubusercontent.com/sarimarton/vps-init/master/nginx.conf?ts=`date +%s` --output /etc/nginx/conf.d/nginx.conf
+
+# Grant read access for nginx (and everyone)
+chmod 755 /home/marci
+
+# Install my projects
+runuser -l  marci -c 'cd projects && git clone https://github.com/sarimarton/sm-lang.git && cd sm-lang && npm i'
+runuser -l  marci -c 'cd projects && git clone https://github.com/sarimarton/vacskamati.hu.git && cd vacskamati.hu && npm i'
+
+# Add https
+
 # Final touch
 systemctl enable nginx
 systemctl start nginx
+
