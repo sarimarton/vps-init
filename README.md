@@ -5,7 +5,7 @@
 Don't forget to clone this project with --recursive:
 
 ```
-git clone --recursive https://github.com/sarimarton/vps-init.git
+git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 ```
 
 or get the submodules after clone, before building:
