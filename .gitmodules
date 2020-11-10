@@ -1,0 +1,6 @@
+[submodule "sm-lang"]
+	path = sm-lang
+	url = https://github.com/sarimarton/sm-lang.git
+[submodule "vacskamati.hu"]
+	path = vacskamati.hu
+	url = https://github.com/sarimarton/vacskamati.hu.git
