@@ -2,7 +2,7 @@
 
 ## Installation
 
-Don't forget to clone the project with the submodules:
+Clone the project with the submodules:
 
 ```
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
