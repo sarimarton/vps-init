@@ -21,3 +21,9 @@ sudo usermod -aG docker marci
 curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
+# Install my services - will be jenkins soon
+dnf install -y git
+git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
+docker build -t vacskamati.hu vacskamati.hu
+docker build -t sm-lang sm-lang
+docker-compose -d up
