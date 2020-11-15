@@ -2,23 +2,21 @@
 
 ## Installation
 
-Don't forget to clone this project with --recursive:
+Don't forget to clone the project with the submodules:
 
 ```
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 ```
 
-or get the submodules after clone, before building:
+Then build the images:
 
 ```
-git submodule update --init
+docker build -t vacskamati.hu vacskamati.hu
+docker build -t sm-lang sm-lang
 ```
 
 ## Run
 
 ```
-git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
-docker build -t vacskamati.hu vacskamati.hu
-docker build -t sm-lang sm-lang
 docker-compose up
 ```
