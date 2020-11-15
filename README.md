@@ -17,5 +17,8 @@ git submodule update --init
 ## Run
 
 ```
+git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
+docker build -t vacskamati.hu vacskamati.hu
+docker build -t sm-lang sm-lang
 docker-compose up
 ```
