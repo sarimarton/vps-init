@@ -13,3 +13,9 @@ or get the submodules after clone, before building:
 ```
 git submodule update --init
 ```
+
+## Run
+
+```
+docker-compose up
+```

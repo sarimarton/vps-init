@@ -1,0 +1,22 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
+  sm-lang:
+    image: sm-lang
+    container_name: sm-lang
+    expose:
+      - '80'
+
+  vacskamati.hu:
+    image: vacskamati.hu
+    container_name: vacskamati.hu
+    expose:
+      - '80'
