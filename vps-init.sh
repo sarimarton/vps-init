@@ -13,32 +13,17 @@ adduser marci
 [ -z "$MARCIPW" ] && passwd marci || echo -e "$MARCIPW\n$MARCIPW" | passwd marci
 usermod -aG wheel marci
 
-# Install packages
-curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
+# Install Docker according to
+# https://blog.ssdnodes.com/blog/getting-started-docker-vps/
+curl -sS https://get.docker.com/ | sh
+systemctl enable docker
+sudo usermod -aG docker marci
+curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
 
-# dnf install -y gcc-c++ make
-dnf install -y mc nginx git nodejs
-
-# Build up marci stuff
-runuser -l  marci -c 'mkdir ~/projects'
-runuser -l  marci -c 'mkdir ~/static'
-runuser -l  marci -c 'mkdir ~/tmp'
-
-# Add nginx config
-curl https://raw.githubusercontent.com/sarimarton/vps-init/master/nginx.conf?ts=`date +%s` --output /etc/nginx/conf.d/nginx.conf
-
-# Grant read access for nginx (and everyone)
-chmod 755 /home/marci
-
-# Install my projects
-runuser -l  marci -c 'cd projects && git clone https://github.com/sarimarton/sm-lang.git && cd sm-lang && npm i'
-runuser -l  marci -c 'cd projects && git clone https://github.com/sarimarton/vacskamati.hu.git && cd vacskamati.hu && npm i'
-
-# Add https
-
-# Add sm-lang service and vacskamati updater to server-start
-
-# Finishing touches
-systemctl enable nginx
-systemctl start nginx
-
+# Install my services - will be jenkins soon
+dnf install -y git
+git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
+docker build -t vacskamati.hu vacskamati.hu
+docker build -t sm-lang sm-lang
+docker-compose -d up
