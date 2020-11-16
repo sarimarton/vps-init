@@ -3,6 +3,8 @@
 
 # Run it from inside the VPS with
 # curl -fsS https://raw.githubusercontent.com/sarimarton/vps-init/master/vps-init.sh | bash
+# or
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/sarimarton/vps-init/master/vps-init.sh?ts=`date +%s`)"
 
 # This script assumes that you're in an SSH session of a fresh CentOS 8 install
 # with the root user.
@@ -24,6 +26,7 @@ chmod +x /usr/local/bin/docker-compose
 # Install my services - will be jenkins soon
 dnf install -y git
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
+cd vps-init
 docker build -t vacskamati.hu vacskamati.hu
 docker build -t sm-lang sm-lang
 docker-compose -d up
