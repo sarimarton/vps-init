@@ -11,13 +11,13 @@ services:
       - 443:443
 
   sm-lang:
-    image: sm-lang
+    build: ./sm-lang
     container_name: sm-lang
     expose:
       - '80'
 
   vacskamati.hu:
-    image: vacskamati.hu
+    build: ./vacskamati.hu
     container_name: vacskamati.hu
     expose:
       - '80'
