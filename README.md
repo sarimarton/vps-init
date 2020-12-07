@@ -11,12 +11,11 @@ git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 Then build the images:
 
 ```
-docker build -t vacskamati.hu vacskamati.hu
-docker build -t sm-lang sm-lang
+docker-compose build
 ```
 
 ## Run
 
 ```
-docker-compose up
+docker-compose up -d
 ```
