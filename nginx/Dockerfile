@@ -12,12 +12,12 @@ RUN pip3 install pip --upgrade
 RUN pip3 install certbot-nginx
 RUN mkdir /etc/letsencrypt
 
-# Another insert: launch nginx, certbot works only when it's launched
+# Another insert: launch nginx, and right after that exec certbot too.
+# Certbot works only when nginx is running, and we have to do these in the same
+# step to keep in the same process.
 # https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
-RUN nohup /docker-entrypoint.sh nginx -g "daemon off;" &
-
-# Add certs fuck yeah!
-RUN certbot \
+RUN nohup /docker-entrypoint.sh nginx -g "daemon off;" & \
+  certbot \
   -d vacskamati.hu \
   -d srm.tn \
   -d sarimar.tn \
