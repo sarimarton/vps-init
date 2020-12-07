@@ -14,8 +14,9 @@ RUN mkdir /etc/letsencrypt
 
 # Another insert: launch nginx, and right after that exec certbot too.
 # Certbot works only when nginx is running, and we have to do these in the same
-# step to keep in the same process.
+# step to keep in the same process. And we have to have the correct conf already.
 # https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
+COPY ./nginx.conf /etc/nginx/nginx.conf
 RUN nohup /docker-entrypoint.sh nginx -g "daemon off;" & \
   certbot \
   -d vacskamati.hu \
