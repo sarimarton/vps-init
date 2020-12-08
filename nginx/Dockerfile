@@ -15,11 +15,11 @@ RUN mkdir /etc/letsencrypt
 # Add weekly renewal of letsencrypt
 RUN (crontab -l ; echo "@weekly certbot renew") 2> /dev/null | sort | uniq | crontab -
 
-# Install certs on image start... :(
-# Build-time cert fetch is not possible, due to the ports being closed, and
-# certbot challenge will fail (https://stackoverflow.com/questions/38981826/docker-publish-ports-during-build).
+# Install certs on image start... Build-time cert fetch is not possible, due to
+# the ports being closed, and certbot challenge will fail -
+# https://stackoverflow.com/questions/38981826/docker-publish-ports-during-build
 # Here we just extend the nginx:alpine ENTRYPOINT and CMD to have the cert fetch
-# first. Super awkward, I know.
+# first. Super awkward, I know - but fancy at the same time! ^_^
 # https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
 ENTRYPOINT []
 CMD certbot --nginx --non-interactive --agree-tos --keep-until-expiring --expand \
