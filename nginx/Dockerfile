@@ -1,6 +1,6 @@
 # Based on this tutorial:
 # https://geko.cloud/nginx-and-ssl-with-certbot-in-docker-alpine/
-FROM nginx:alpine
+FROM nginx:1.19.5-alpine
 RUN apk add python3 python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev
 
 # This is to work around a certbot install problem down there
@@ -23,6 +23,7 @@ RUN (crontab -l ; echo "@weekly certbot renew") 2> /dev/null | sort | uniq | cro
 # https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
 ENTRYPOINT []
 CMD nohup /docker-entrypoint.sh nginx -g "daemon off;" & \
-  certbot --nginx --non-interactive --agree-tos -m sarimarton@gmail.com \
-  -d vacskamati.hu -d srm.tn -d files.srm.tn -d sarimar.tn & \
+  certbot --nginx --non-interactive --agree-tos --keep-until-expiring --expand \
+  -m sarimarton@gmail.com \
+  -d vacskamati.hu,srm.tn & \
   sleep infinity
