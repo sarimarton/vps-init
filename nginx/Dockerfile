@@ -12,18 +12,16 @@ RUN pip3 install pip --upgrade
 RUN pip3 install certbot-nginx
 RUN mkdir /etc/letsencrypt
 
-# Another insert: launch nginx, and right after that exec certbot too.
-# Certbot works only when nginx is running, and we have to do these in the same
-# step to keep in the same process. And we have to have the correct conf already.
-# https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
-COPY ./nginx.conf /etc/nginx/nginx.conf
-RUN nohup /docker-entrypoint.sh nginx -g "daemon off;" & \
-  certbot \
-  -d vacskamati.hu \
-  -d srm.tn \
-  -d sarimar.tn \
-  --nginx --non-interactive --agree-tos \
-  -m sarimarton@gmail.com
-
-# Add weekly renew
+# Add weekly renewal of letsencrypt
 RUN (crontab -l ; echo "@weekly certbot renew") 2> /dev/null | sort | uniq | crontab -
+
+# Install certs on image start... :(
+# Build-time cert fetch is not possible, due to the ports being closed, and
+# certbot challenge will fail (https://stackoverflow.com/questions/38981826/docker-publish-ports-during-build).
+# Here we just extend the nginx:alpine ENTRYPOINT and CMD to have the cert fetch
+# first. Awkward, I know.
+# https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
+ENTRYPOINT []
+CMD certbot --nginx --non-interactive --agree-tos -m sarimarton@gmail.com \
+  -d vacskamati.hu -d srm.tn -d files.srm.tn -d sarimar.tn & \
+  /docker-entrypoint.sh nginx -g "daemon off;"
