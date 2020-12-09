@@ -25,9 +25,16 @@ chmod 755 /home/marci
 curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-# Install my services - will be jenkins soon
+# Install my services
 dnf install -y git
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 cd vps-init
-docker-compose build
-docker-compose up -d
+
+# Add cron job for containers to talk back to host
+# https://stackoverflow.com/a/63719458/839382
+mkfifo $(pwd)/pipe
+(crontab -l; echo "@reboot while true; do eval \"\$(cat $(pwd)/pipe)\"; done") 2> /dev/null | sort | uniq | crontab -
+# Shell exec on host from container: echo "<command>" > [volume bind]/pipe
+
+docker-compose up --build -d
+
