@@ -8,14 +8,8 @@ Clone the project with the submodules:
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 ```
 
-Then build the images:
+Then build/run:
 
 ```
-docker-compose build
-```
-
-## Run
-
-```
-docker-compose up -d
+docker-compose up --build -d
 ```
