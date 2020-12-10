@@ -33,7 +33,7 @@ services:
       - '25:25'
     restart: always
     environment:
-      SMF_CONFIG: info@glopser.org:sarimarton@gmail.com
+      SMF_CONFIG: info@glopser.org:jchakuwa@yahoo.com
 
   glopser-db:
     image: mysql:5.7
