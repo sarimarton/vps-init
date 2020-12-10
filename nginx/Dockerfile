@@ -12,6 +12,10 @@ RUN pip3 install pip --upgrade
 RUN pip3 install certbot-nginx
 RUN mkdir /etc/letsencrypt
 
+# There might be other volumes in docker-compose, but the certs should for sure
+# be persisted outside.
+VOLUME ["/etc/letsencrypt"]
+
 # Add weekly renewal of letsencrypt
 RUN (crontab -l ; echo "@weekly certbot renew") 2> /dev/null | sort | uniq | crontab -
 
