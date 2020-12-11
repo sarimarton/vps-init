@@ -32,9 +32,12 @@ cd vps-init
 
 # Add cron job for containers to talk back to host
 # https://stackoverflow.com/a/63719458/839382
-mkfifo $(pwd)/pipe
-(crontab -l; echo "@reboot while true; do eval \"\$(cat $(pwd)/pipe)\"; done") 2> /dev/null | sort | uniq | crontab -
+mkfifo $(pwd)/pipe-host
+(crontab -l; echo "@reboot while true; do eval \"\$(cat $(pwd)/pipe-host)\"; done") 2> /dev/null | sort | uniq | crontab -
 # Shell exec on host from container: echo "<command>" > [volume bind]/pipe
 
-docker-compose up --build -d
+# Spin up and add spin-up to crontab @reboot
+launch="docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build"
+(crontab -l; echo "@reboot cd $(pwd) && $launch") 2> /dev/null | sort | uniq | crontab -
+$cmd
 
