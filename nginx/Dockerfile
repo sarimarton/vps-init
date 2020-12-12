@@ -26,7 +26,9 @@ RUN (crontab -l ; echo "@weekly certbot renew") 2> /dev/null | sort | uniq | cro
 # first. Super awkward, I know - but fancy at the same time! ^_^
 # https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/Dockerfile#L124
 ENTRYPOINT []
-CMD certbot --nginx --non-interactive --agree-tos --keep-until-expiring --expand \
-  -m sarimarton@gmail.com \
-  -d vacskamati.hu,srm.tn,files.srm.tn,sarimar.tn & \
+CMD if [ "$ENV" = "production" ]; then \
+    certbot --nginx --non-interactive --agree-tos --keep-until-expiring --expand \
+      -m sarimarton@gmail.com \
+      -d vacskamati.hu,srm.tn,files.srm.tn,sarimar.tn; \
+  fi & \
   /docker-entrypoint.sh nginx -g "daemon off;"
