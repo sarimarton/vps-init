@@ -26,6 +26,16 @@ services:
     expose:
       - '80'
 
+  aws-svc:
+    build: ./aws-svc
+    container_name: aws-svc
+    volumes:
+      - ./.aws:/root/.aws
+      - ./aws-data:/aws
+    restart: always
+    expose:
+      - '1111'
+
   glopser-mail:
     image: zixia/simple-mail-forwarder
     ports:
