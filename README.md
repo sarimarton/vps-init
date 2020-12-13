@@ -8,14 +8,17 @@ Clone the project with the submodules:
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 ```
 
-Then build/run on dev:
-
+Build/run dev:
 ```
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+make start
 ```
 
-Then build/run on prod:
-
+Build/run prod:
 ```
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+make start-prod
+```
+
+Stop:
+```
+make stop
 ```
