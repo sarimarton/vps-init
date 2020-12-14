@@ -1,3 +1,4 @@
+# https://lithic.tech/blog/2020-05/makefile-dot-env
 ifneq (,$(wildcard ./.env))
 	include .env
 	export
@@ -16,7 +17,7 @@ bkup-glopser:
 restore-glopser:
 	@cat glopser-vol-${ENV}.tar.bz2 | docker run -i -v vps-init_glopser-volume:/volume --rm loomchild/volume-backup restore -
 
-start: include .env
+start:
 	@docker-compose up -d --build
 
 stop:
