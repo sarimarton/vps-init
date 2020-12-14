@@ -1,19 +1,26 @@
-.DEFAULT_GOAL := start
+ifneq (,$(wildcard ./.env))
+	include .env
+	export
+endif
 
-bkup-glopser-local:
-	@docker run -v vps-init_glopser-volume:/volume --rm loomchild/volume-backup backup - > glopser_archive.tar.bz2
+install:
+	@cp .env.${ENV} .env \
+		&& echo "[default]\n\
+	aws_access_key_id = ${AWS_ACCESS_KEY_ID}\n\
+	aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}\n\
+	" > ./.aws/credentials
 
-restore-glopser-local:
-	@cat glopser-volume.tar.bz2 | docker run -i -v vps-init_glopser-volume:/volume --rm loomchild/volume-backup restore -
+bkup-glopser:
+	@docker run -v vps-init_glopser-volume:/volume --rm loomchild/volume-backup backup - > glopser-vol-${ENV}.tar.bz2
 
-start-dev:
-	@docker-compose --env-file ./.env.dev up -d --build
+restore-glopser:
+	@cat glopser-vol-${ENV}.tar.bz2 | docker run -i -v vps-init_glopser-volume:/volume --rm loomchild/volume-backup restore -
 
-start-prod:
-	@docker-compose --env-file ./.env.prod up -d --build
-
-start: start-dev
+start: include .env
+	@docker-compose up -d --build
 
 stop:
 	@docker-compose down
+
+.DEFAULT_GOAL := start
 

@@ -6,16 +6,13 @@ Clone the project with the submodules:
 
 ```
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
+cd vps-init
+make ENV=[dev|prod] install
 ```
 
-Build/run dev:
+Build/run:
 ```
 make start
-```
-
-Build/run prod:
-```
-make start-prod
 ```
 
 Stop:

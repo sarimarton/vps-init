@@ -37,7 +37,7 @@ mkfifo $(pwd)/pipe-host
 # Shell exec on host from container: echo "<command>" > [volume bind]/pipe
 
 # Spin up and add spin-up to crontab @reboot
-launch="/usr/local/bin/docker-compose -f $(pwd)/docker-compose.yml -f $(pwd)/docker-compose.prod.yml up -d --build"
-(crontab -l; echo "@reboot $launch") 2> /dev/null | sort | uniq | crontab -
-$launch
-
+# launch="/usr/local/bin/docker-compose -f $(pwd)/docker-compose.yml -f $(pwd)/docker-compose.prod.yml up -d --build"
+(crontab -l; echo "@reboot cd $(pwd); make start") 2> /dev/null | sort | uniq | crontab -
+make ENV=prod install
+make start
