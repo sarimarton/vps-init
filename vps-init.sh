@@ -26,7 +26,7 @@ curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compos
 chmod +x /usr/local/bin/docker-compose
 
 # Install my services
-dnf install -y git
+dnf install -y git make
 git clone --recurse-submodules https://github.com/sarimarton/vps-init.git
 cd vps-init
 
