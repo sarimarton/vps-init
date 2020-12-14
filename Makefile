@@ -6,10 +6,9 @@ endif
 
 install:
 	@cp .env.${ENV} .env \
-		&& echo "[default]\n\
-	aws_access_key_id = ${AWS_ACCESS_KEY_ID}\n\
-	aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}\n\
-	" > ./.aws/credentials
+	&& echo "[default]" > ${PWD}/.aws/credentials \
+	&& echo "aws_access_key_id = ${AWS_ACCESS_KEY_ID}" >> ${PWD}/.aws/credentials \
+	&& echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> &{PWD}/.aws/credentials
 
 # Docker volume backup-restore CLI: https://github.com/loomchild/volume-backup
 glopser-backup:
